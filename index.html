@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Survivors - Fixed & Enhanced Edition</title>
+    <title>Space Survivors - Stable Standalone Edition</title>
     <style>
         * { box-sizing: border-box; }
         body {
@@ -45,7 +45,6 @@
         
         .overlay-menu { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 7, 18, 0.96); border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 20; border: 2px solid #1e293b; }
         
-        /* TELA DE INÍCIO COM A ARTE ORIGINAL COMPLETA E BOTÃO NEON LIMPO */
         #splashScreen {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle, rgba(2, 6, 23, 0.2) 0%, rgba(2, 6, 23, 0.7) 100%), url('Gemini_Generated_Image_xcy3wdxcy3wdxcy3.jpg') no-repeat center center;
@@ -62,7 +61,6 @@
         }
         .start-btn:hover { transform: scale(1.08); box-shadow: 0 0 55px rgba(56, 189, 248, 0.95); }
 
-        /* TELA DE PAUSE & PROGRESSO */
         #pauseModal {
             display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(2, 6, 23, 0.92); backdrop-filter: blur(8px); border-radius: 12px;
@@ -124,12 +122,10 @@
 <body>
 
 <div id="gameContainer">
-    <!-- Tela Inicial com Imagem de Capa e Botão Neon -->
     <div id="splashScreen">
         <button class="start-btn" onclick="enterHangar()">INICIAR JOGO</button>
     </div>
 
-    <!-- Tela de Pause & Progresso -->
     <div id="pauseModal">
         <div class="pause-title">⏸️ JOGO PAUSADO</div>
         <div class="pause-stats-grid">
@@ -216,9 +212,6 @@
 </div>
 
 <script>
-// ==========================================
-// SISTEMA DE ÁUDIO SINTÉTICO (WEB AUDIO API)
-// ==========================================
 let audioCtx = null;
 
 function initAudio() {
@@ -283,9 +276,7 @@ function enterHangar() {
     buildHangarUI();
 }
 
-// ==========================================
-// ASSETS E CONFIGURAÇÕES
-// ==========================================
+// DICIONÁRIO PADRÃO DE ASSETS NATIVOS NO PRÓPRIO HTML
 const defaultAssetURLs = {
     scout: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/playerShip1_blue.png',
     interceptor: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/playerShip2_orange.png',
@@ -293,29 +284,24 @@ const defaultAssetURLs = {
     phantom: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/playerShip1_green.png',
     vanguard: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/playerShip2_dark.png',
     titan: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/playerShip3_blue.png',
-    
     laserBlue: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Lasers/laserBlue01.png',
     laserGreen: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Lasers/laserGreen11.png',
     laserYellow: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Lasers/laserYellow01.png',
     laserRed: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Lasers/laserRed01.png',
-    
     alien1: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Enemies/enemyBlack1.png',
     alien2: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Enemies/enemyBlue2.png',
     alien3: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Enemies/enemyGreen3.png',
     alien4: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Enemies/enemyRed4.png',
     alien5: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Enemies/enemyBlack5.png',
-    
     boss1: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Enemies/enemyRed5.png',
     boss2: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Enemies/enemyBlack4.png',
     boss3: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Enemies/enemyBlue5.png',
     boss4: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Enemies/enemyGreen5.png',
     boss5: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Enemies/enemyRed1.png',
-    
     asteroid: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Meteors/meteorGrey_big1.png',
     blackhole: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/ufoBlue.png',
     planetEarth: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Powerups/pill_blue.png',
     planetMars: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Powerups/pill_red.png',
-
     powerup_heal: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Powerups/pill_green.png',
     powerup_shield: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Powerups/shield_gold.png',
     powerup_pulse: 'https://raw.githubusercontent.com/kenney-assets/space-shooter-redux/master/PNG/Powerups/star_bronze.png',
@@ -330,13 +316,20 @@ const defaultAssetURLs = {
 
 const defaultPowerupDurations = { pulseAura: 20, regenHp: 15, drones: 20, overclock: 12, multiShot: 12, megaBeam: 10 };
 
-let currentAssetURLs = JSON.parse(localStorage.getItem('space_custom_assets_v10')) || { ...defaultAssetURLs };
-let currentPowerupDurations = JSON.parse(localStorage.getItem('space_powerup_durations_v10')) || { ...defaultPowerupDurations };
+let currentAssetURLs = { ...defaultAssetURLs };
+let currentPowerupDurations = { ...defaultPowerupDurations };
+
+try {
+    const savedAssets = localStorage.getItem('space_custom_assets_fixed');
+    if (savedAssets) currentAssetURLs = { ...defaultAssetURLs, ...JSON.parse(savedAssets) };
+    const savedDurations = localStorage.getItem('space_powerup_durations_fixed');
+    if (savedDurations) currentPowerupDurations = { ...defaultPowerupDurations, ...JSON.parse(savedDurations) };
+} catch(e){}
 
 let goldBank = parseInt(localStorage.getItem('space_gold') || '0');
 let maxKillsRecord = parseInt(localStorage.getItem('space_max_kills') || '0');
 let maxTimeRecord = parseInt(localStorage.getItem('space_max_time') || '0');
-let ownedShips = JSON.parse(localStorage.getItem('space_owned_ships_v10')) || ['scout'];
+let ownedShips = JSON.parse(localStorage.getItem('space_owned_ships') || '["scout"]');
 let shopUpgrades = JSON.parse(localStorage.getItem('space_shop_upgrades') || '{"pulseAura":0, "drones":0, "overclock":0}');
 
 const assets = {};
@@ -413,7 +406,7 @@ function buyOrSelectShip(key) {
         ownedShips.push(key);
         selectedShipKey = key;
         localStorage.setItem('space_gold', goldBank);
-        localStorage.setItem('space_owned_ships_v10', JSON.stringify(ownedShips));
+        localStorage.setItem('space_owned_ships', JSON.stringify(ownedShips));
         buildHangarUI();
     } else alert("Créditos insuficientes!");
 }
@@ -555,8 +548,8 @@ function saveAssetSettings() {
         if (input) currentPowerupDurations[k] = parseInt(input.value) || defaultPowerupDurations[k];
     });
 
-    localStorage.setItem('space_custom_assets_v10', JSON.stringify(currentAssetURLs));
-    localStorage.setItem('space_powerup_durations_v10', JSON.stringify(currentPowerupDurations));
+    localStorage.setItem('space_custom_assets_fixed', JSON.stringify(currentAssetURLs));
+    localStorage.setItem('space_powerup_durations_fixed', JSON.stringify(currentPowerupDurations));
     loadAssets();
     alert("Parâmetros salvos!");
     closeAssetSettings();
@@ -586,11 +579,11 @@ function handleFileImport(event) {
             if (config.assets) currentAssetURLs = { ...defaultAssetURLs, ...config.assets };
             if (config.durations) currentPowerupDurations = { ...defaultPowerupDurations, ...config.durations };
 
-            localStorage.setItem('space_custom_assets_v10', JSON.stringify(currentAssetURLs));
-            localStorage.setItem('space_powerup_durations_v10', JSON.stringify(currentPowerupDurations));
+            localStorage.setItem('space_custom_assets_fixed', JSON.stringify(currentAssetURLs));
+            localStorage.setItem('space_powerup_durations_fixed', JSON.stringify(currentPowerupDurations));
             loadAssets();
             openAssetSettings();
-            alert("Parâmetros importados com sucesso em qualquer PC!");
+            alert("Parâmetros importados com sucesso!");
         } catch (err) { alert("Erro ao ler arquivo JSON!"); }
     };
     reader.readAsText(file);
@@ -599,16 +592,13 @@ function handleFileImport(event) {
 function resetAllDefaultAssets() {
     currentAssetURLs = { ...defaultAssetURLs };
     currentPowerupDurations = { ...defaultPowerupDurations };
-    localStorage.removeItem('space_custom_assets_v10');
-    localStorage.removeItem('space_powerup_durations_v10');
+    localStorage.removeItem('space_custom_assets_fixed');
+    localStorage.removeItem('space_powerup_durations_fixed');
     loadAssets();
     openAssetSettings();
     alert("Restaurado para o padrão!");
 }
 
-// ==========================================
-// ENGINE DE ALTA PERFORMANCE (ANTI-LAG)
-// ==========================================
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const radarCanvas = document.getElementById('radarCanvas');
@@ -617,7 +607,6 @@ const radarCtx = radarCanvas.getContext('2d');
 let isGameRunning = false;
 let isPaused = false;
 let gameLoopRequestId = null;
-let lastTimestamp = 0;
 
 let kills = 0;
 let sessionGold = 0;
@@ -631,9 +620,7 @@ const player = {
     baseMaxSpeed: 3.2, maxSpeed: 3.2, speedLevel: 1,
     hp: 120, maxHp: 120, fireRate: 300, lastShot: 0, damage: 45,
     magnetRange: 180, angle: 0, bulletCount: 1, imgKey: 'scout', laserKey: 'laserBlue', color: '#38bdf8',
-    
-    invulnerableTimer: 0,
-    hasMissiles: false,
+    invulnerableTimer: 0, hasMissiles: false,
     buffs: { pulseAura: 0, regenHp: 0, drones: 0, overclock: 0, multiShot: 0, megaBeam: 0, shieldHits: 0 },
     pulseCooldown: 0, missileCooldown: 0
 };
@@ -665,7 +652,6 @@ function togglePause() {
         document.getElementById('pStatTime').innerText = `${String(Math.floor(sec / 60)).padStart(2, '0')}:${String(sec % 60).padStart(2, '0')}`;
     } else {
         modal.style.display = 'none';
-        lastTimestamp = performance.now();
         gameLoopRequestId = requestAnimationFrame(gameLoop);
     }
 }
@@ -687,17 +673,16 @@ const spaceObjects = [
     { type: 'planet', planetKey: 'planetMars', x: -800, y: 650, radius: 75, color: '#ef4444' }
 ];
 
-const dustParticles = Array.from({length: 120}, () => ({
-    x: (Math.random() - 0.5) * 3500,
-    y: (Math.random() - 0.5) * 3500,
+const dustParticles = Array.from({length: 40}, () => ({
+    x: (Math.random() - 0.5) * 3000,
+    y: (Math.random() - 0.5) * 3000,
     size: Math.random() * 1.5 + 0.5,
-    alpha: Math.random() * 0.6 + 0.2
+    alpha: Math.random() * 0.5 + 0.2
 }));
 
 const distantGalaxies = [
     { x: -900, y: -300, radius: 130, color: '#a855f7' },
-    { x: 1100, y: 400, radius: 150, color: '#38bdf8' },
-    { x: -200, y: 1000, radius: 110, color: '#f97316' }
+    { x: 1100, y: 400, radius: 150, color: '#38bdf8' }
 ];
 
 function spawnMapArtifacts() {
@@ -763,7 +748,6 @@ function startGame() {
     
     isGameRunning = true;
     isPaused = false;
-    lastTimestamp = performance.now();
     gameLoopRequestId = requestAnimationFrame(gameLoop);
 }
 
@@ -771,10 +755,16 @@ function gameLoop(timestamp) {
     if (isGameRunning && !isPaused) {
         update(timestamp);
         render();
-        renderRadar();
+        if (frameCount % 6 === 0) renderRadar();
         updateBuffHUD();
         gameLoopRequestId = requestAnimationFrame(gameLoop);
     }
+}
+
+function distSq(x1, y1, x2, y2) {
+    const dx = x1 - x2;
+    const dy = y1 - y2;
+    return dx * dx + dy * dy;
 }
 
 function update(timestamp) {
@@ -792,8 +782,9 @@ function update(timestamp) {
 
     spaceObjects.forEach(obj => {
         if (obj.type === 'blackhole') {
-            const dist = Math.hypot(obj.x - player.worldX, obj.y - player.worldY);
-            if (dist < obj.pullRadius && dist > 10) {
+            const dSq = distSq(obj.x, obj.y, player.worldX, player.worldY);
+            if (dSq < obj.pullRadius * obj.pullRadius && dSq > 100) {
+                const dist = Math.sqrt(dSq);
                 const angle = Math.atan2(obj.y - player.worldY, obj.x - player.worldX);
                 const force = (1 - dist / obj.pullRadius) * obj.pullForce;
                 player.vx += Math.cos(angle) * force;
@@ -802,8 +793,9 @@ function update(timestamp) {
         }
     });
 
-    const speed = Math.hypot(player.vx, player.vy);
-    if (speed > player.maxSpeed) {
+    const speedSq = player.vx * player.vx + player.vy * player.vy;
+    if (speedSq > player.maxSpeed * player.maxSpeed) {
+        const speed = Math.sqrt(speedSq);
         player.vx = (player.vx / speed) * player.maxSpeed;
         player.vy = (player.vy / speed) * player.maxSpeed;
     }
@@ -811,7 +803,7 @@ function update(timestamp) {
     player.vx *= player.friction; player.vy *= player.friction;
     player.worldX += player.vx; player.worldY += player.vy;
 
-    if (Math.hypot(player.vx, player.vy) > 0.2) player.angle = Math.atan2(player.vy, player.vx);
+    if (speedSq > 0.04) player.angle = Math.atan2(player.vy, player.vx);
 
     if (frameCount % 60 === 0) {
         const sec = Math.floor(frameCount / 60);
@@ -823,7 +815,7 @@ function update(timestamp) {
         if (k !== 'shieldHits' && player.buffs[k] > 0) player.buffs[k]--;
     });
 
-    if (player.buffs.regenHp > 0 && frameCount % 12 === 0) {
+    if (player.buffs.regenHp > 0 && frameCount % 20 === 0) {
         player.hp = Math.min(player.maxHp, player.hp + 2);
         document.getElementById('hpBar').style.width = `${(player.hp / player.maxHp) * 100}%`;
     }
@@ -836,12 +828,12 @@ function update(timestamp) {
         }
     }
 
-    if (player.hasMissiles) {
+    if (player.hasMissiles && missiles.length < 5) {
         player.missileCooldown++;
-        if (player.missileCooldown >= 70) {
+        if (player.missileCooldown >= 90) {
             missiles.push({
                 x: player.worldX, y: player.worldY,
-                vx: 0, vy: 0, speed: 8.5, damage: 110, life: 140
+                vx: 0, vy: 0, speed: 8.0, damage: 110, life: 90
             });
             player.missileCooldown = 0;
         }
@@ -851,11 +843,11 @@ function update(timestamp) {
         const m = missiles[i];
         let target = activeBoss;
         if (!target && enemies.length > 0) {
-            let minDist = Infinity;
-            enemies.forEach(e => {
-                const dist = Math.hypot(e.x - m.x, e.y - m.y);
-                if (dist < minDist) { minDist = dist; target = e; }
-            });
+            let minDistSq = Infinity;
+            for (let j = 0; j < enemies.length; j++) {
+                const dSq = distSq(enemies[j].x, enemies[j].y, m.x, m.y);
+                if (dSq < minDistSq) { minDistSq = dSq; target = enemies[j]; }
+            }
         }
 
         if (target) {
@@ -868,7 +860,7 @@ function update(timestamp) {
 
         m.x += m.vx; m.y += m.vy; m.life--;
 
-        if (target && Math.hypot(target.x - m.x, target.y - m.y) < target.size + 10) {
+        if (target && distSq(target.x, target.y, m.x, m.y) < (target.size + 10) * (target.size + 10)) {
             target.hp -= m.damage;
             shockwaves.push({ x: m.x, y: m.y, radius: 6, alpha: 1.0, damage: 0 });
             playSound('hit');
@@ -879,7 +871,7 @@ function update(timestamp) {
         if (m.life <= 0) missiles.splice(i, 1);
     }
 
-    if (player.buffs.drones > 0 && frameCount % 24 === 0) {
+    if (player.buffs.drones > 0 && frameCount % 35 === 0 && bullets.length < 15) {
         let target = activeBoss || (enemies.length > 0 ? enemies[0] : null);
         if (target) {
             const angle = Math.atan2(target.y - player.worldY, target.x - player.worldX);
@@ -887,7 +879,7 @@ function update(timestamp) {
                 x: player.worldX + Math.cos(angle + 1.5) * 35,
                 y: player.worldY + Math.sin(angle + 1.5) * 35,
                 vx: Math.cos(angle) * 11, vy: Math.sin(angle) * 11,
-                damage: 30, life: 60, angle: angle
+                damage: 30, life: 35, angle: angle
             });
         }
     }
@@ -895,13 +887,14 @@ function update(timestamp) {
     for (let i = shockwaves.length - 1; i >= 0; i--) {
         const sw = shockwaves[i];
         sw.radius += 14;
-        sw.alpha -= 0.03;
+        sw.alpha -= 0.05;
 
         if (sw.damage > 0) {
-            enemies.forEach(e => {
-                if (Math.hypot(e.x - sw.x, e.y - sw.y) < sw.radius) e.hp -= sw.damage;
-            });
-            if (activeBoss && Math.hypot(activeBoss.x - sw.x, activeBoss.y - sw.y) < sw.radius) {
+            const rSq = sw.radius * sw.radius;
+            for (let j = enemies.length - 1; j >= 0; j--) {
+                if (distSq(enemies[j].x, enemies[j].y, sw.x, sw.y) < rSq) enemies[j].hp -= sw.damage;
+            }
+            if (activeBoss && distSq(activeBoss.x, activeBoss.y, sw.x, sw.y) < rSq) {
                 activeBoss.hp -= sw.damage;
             }
             sw.damage = 0;
@@ -910,24 +903,23 @@ function update(timestamp) {
         if (sw.alpha <= 0) shockwaves.splice(i, 1);
     }
 
-    if (player.buffs.megaBeam > 0 && frameCount % 6 === 0) {
+    if (player.buffs.megaBeam > 0 && frameCount % 10 === 0) {
         shockwaves.push({ x: player.worldX, y: player.worldY, radius: 45, alpha: 0.8, damage: 80 });
     }
 
     const effectiveFireRate = player.buffs.overclock > 0 ? player.fireRate * 0.4 : player.fireRate;
     const effectiveDamage = player.buffs.overclock > 0 ? player.damage * 1.6 : player.damage;
 
-    if (timestamp - player.lastShot > effectiveFireRate) {
-        let targets = [...enemies];
-        if (activeBoss) targets.push(activeBoss);
+    if (timestamp - player.lastShot > effectiveFireRate && bullets.length < 20) {
+        let nearest = activeBoss;
+        let minDistSq = nearest ? distSq(nearest.x, nearest.y, player.worldX, player.worldY) : 650 * 650;
 
-        let nearest = null, minDist = Infinity;
-        targets.forEach(t => {
-            const dist = Math.hypot(t.x - player.worldX, t.y - player.worldY);
-            if (dist < minDist) { minDist = dist; nearest = t; }
-        });
+        for (let i = 0; i < enemies.length; i++) {
+            const dSq = distSq(enemies[i].x, enemies[i].y, player.worldX, player.worldY);
+            if (dSq < minDistSq) { minDistSq = dSq; nearest = enemies[i]; }
+        }
 
-        if (nearest && minDist < 750) {
+        if (nearest) {
             const baseAngle = Math.atan2(nearest.y - player.worldY, nearest.x - player.worldX);
             const totalProjectiles = player.bulletCount + (player.buffs.multiShot > 0 ? 2 : 0);
             for (let i = 0; i < totalProjectiles; i++) {
@@ -937,7 +929,7 @@ function update(timestamp) {
                     x: player.worldX, y: player.worldY,
                     vx: Math.cos(finalAngle) * 9.5 + player.vx * 0.2,
                     vy: Math.sin(finalAngle) * 9.5 + player.vy * 0.2,
-                    damage: effectiveDamage, life: 75, angle: finalAngle
+                    damage: effectiveDamage, life: 45, angle: finalAngle
                 });
             }
             playSound('laser');
@@ -948,16 +940,16 @@ function update(timestamp) {
     for (let i = bullets.length - 1; i >= 0; i--) {
         const b = bullets[i];
         b.x += b.vx; b.y += b.vy; b.life--;
-        if (b.life <= 0 || Math.hypot(b.x - player.worldX, b.y - player.worldY) > 850) bullets.splice(i, 1);
+        if (b.life <= 0 || distSq(b.x, b.y, player.worldX, player.worldY) > 650 * 650) bullets.splice(i, 1);
     }
 
     for (let i = enemyBullets.length - 1; i >= 0; i--) {
         const eb = enemyBullets[i];
         eb.x += eb.vx; eb.y += eb.vy; eb.life--;
-        if (Math.hypot(player.worldX - eb.x, player.worldY - eb.y) < player.size + 4) {
+        if (distSq(player.worldX, player.worldY, eb.x, eb.y) < (player.size + 4) * (player.size + 4)) {
             takeDamage(10); enemyBullets.splice(i, 1); continue;
         }
-        if (eb.life <= 0 || Math.hypot(eb.x - player.worldX, eb.y - player.worldY) > 850) enemyBullets.splice(i, 1);
+        if (eb.life <= 0 || distSq(eb.x, eb.y, player.worldX, player.worldY) > 650 * 650) enemyBullets.splice(i, 1);
     }
 
     if (activeBoss) {
@@ -966,40 +958,42 @@ function update(timestamp) {
         activeBoss.y += Math.sin(angle) * activeBoss.speed;
         activeBoss.angle = angle;
 
-        if (frameCount % 110 === 0 && enemyBullets.length < 15) {
-            for (let a = -0.15; a <= 0.15; a += 0.15) {
+        if (frameCount % 160 === 0 && enemyBullets.length < 6) {
+            for (let a = -0.1; a <= 0.1; a += 0.1) {
                 enemyBullets.push({
                     x: activeBoss.x, y: activeBoss.y,
-                    vx: Math.cos(angle + a) * 4.2, vy: Math.sin(angle + a) * 4.2,
-                    life: 90, angle: angle + a
+                    vx: Math.cos(angle + a) * 3.8, vy: Math.sin(angle + a) * 3.8,
+                    life: 60, angle: angle + a
                 });
             }
         }
 
-        bullets.forEach((b, bi) => {
-            if (Math.hypot(b.x - activeBoss.x, b.y - activeBoss.y) < activeBoss.size) {
-                activeBoss.hp -= b.damage;
+        const bossSizeSq = activeBoss.size * activeBoss.size;
+        for (let bi = bullets.length - 1; bi >= 0; bi--) {
+            if (distSq(bullets[bi].x, bullets[bi].y, activeBoss.x, activeBoss.y) < bossSizeSq) {
+                activeBoss.hp -= bullets[bi].damage;
                 bullets.splice(bi, 1);
                 document.getElementById('bossHpBar').style.width = `${Math.max(0, (activeBoss.hp / activeBoss.maxHp) * 100)}%`;
 
                 if (activeBoss.hp <= 0) {
-                    for (let c = 0; c < 20; c++) coins.push({ x: activeBoss.x + (Math.random()-0.5)*50, y: activeBoss.y + (Math.random()-0.5)*50, val: 5 });
+                    for (let c = 0; c < 12; c++) coins.push({ x: activeBoss.x + (Math.random()-0.5)*40, y: activeBoss.y + (Math.random()-0.5)*40, val: 5 });
                     activeBoss = null;
                     document.getElementById('bossHud').style.display = 'none';
                     kills += 10;
                     document.getElementById('killsTxt').innerText = kills;
+                    break;
                 }
             }
-        });
+        }
     }
 
     const timeTier = Math.min(4, Math.floor(frameCount / 2400));
-    if (enemies.length < 35 && Math.random() < 0.025 + timeTier * 0.005) {
+    if (enemies.length < 18 && Math.random() < 0.015 + timeTier * 0.003) {
         const spawnAngle = Math.random() * Math.PI * 2;
         const alienKeys = ['alien1', 'alien2', 'alien3', 'alien4', 'alien5'];
         enemies.push({
-            x: player.worldX + Math.cos(spawnAngle) * (600 + Math.random() * 200),
-            y: player.worldY + Math.sin(spawnAngle) * (600 + Math.random() * 200),
+            x: player.worldX + Math.cos(spawnAngle) * (550 + Math.random() * 150),
+            y: player.worldY + Math.sin(spawnAngle) * (550 + Math.random() * 150),
             size: 16 + timeTier * 2, hp: 25 + timeTier * 18,
             speed: 0.7 + timeTier * 0.12, imgKey: alienKeys[timeTier], angle: 0
         });
@@ -1007,21 +1001,22 @@ function update(timestamp) {
 
     for (let ei = enemies.length - 1; ei >= 0; ei--) {
         const e = enemies[ei];
-        const distToPlayer = Math.hypot(player.worldX - e.x, player.worldY - e.y);
-        if (distToPlayer > 1000) { enemies.splice(ei, 1); continue; }
+        const dSq = distSq(player.worldX, player.worldY, e.x, e.y);
+        if (dSq > 750 * 750) { enemies.splice(ei, 1); continue; }
 
         const angle = Math.atan2(player.worldY - e.y, player.worldX - e.x);
         e.x += Math.cos(angle) * e.speed;
         e.y += Math.sin(angle) * e.speed;
         e.angle = angle;
 
-        if (distToPlayer < player.size + e.size) {
+        if (dSq < (player.size + e.size) * (player.size + e.size)) {
             takeDamage(12); enemies.splice(ei, 1); continue;
         }
 
-        bullets.forEach((b, bi) => {
-            if (Math.hypot(b.x - e.x, b.y - e.y) < e.size + 4) {
-                e.hp -= b.damage;
+        const eSizeSq = (e.size + 4) * (e.size + 4);
+        for (let bi = bullets.length - 1; bi >= 0; bi--) {
+            if (distSq(bullets[bi].x, bullets[bi].y, e.x, e.y) < eSizeSq) {
+                e.hp -= bullets[bi].damage;
                 bullets.splice(bi, 1);
                 if (e.hp <= 0) {
                     coins.push({ x: e.x, y: e.y, val: 1 });
@@ -1029,25 +1024,27 @@ function update(timestamp) {
                     kills++;
                     document.getElementById('killsTxt').innerText = kills;
                 }
+                break;
             }
-        });
+        }
     }
 
-    if (frameCount % 360 === 0 && drops.length < 8) {
+    if (frameCount % 400 === 0 && drops.length < 4) {
         const dropAngle = Math.random() * Math.PI * 2;
         const types = ['heal', 'shield', 'multishot', 'laserUpgrade', 'bomb', 'pulse', 'regen', 'drones', 'missiles', 'overclock', 'speed', 'beam'];
         drops.push({
-            x: player.worldX + Math.cos(dropAngle) * (300 + Math.random() * 250),
-            y: player.worldY + Math.sin(dropAngle) * (300 + Math.random() * 250),
+            x: player.worldX + Math.cos(dropAngle) * (250 + Math.random() * 200),
+            y: player.worldY + Math.sin(dropAngle) * (250 + Math.random() * 200),
             type: types[Math.floor(Math.random() * types.length)]
         });
     }
 
+    const magnetSq = player.magnetRange * player.magnetRange;
     for (let i = coins.length - 1; i >= 0; i--) {
         const c = coins[i];
-        const dist = Math.hypot(player.worldX - c.x, player.worldY - c.y);
-        if (dist < player.magnetRange) { c.x += (player.worldX - c.x) * 0.1; c.y += (player.worldY - c.y) * 0.1; }
-        if (dist < player.size + 8) {
+        const dSq = distSq(player.worldX, player.worldY, c.x, c.y);
+        if (dSq < magnetSq) { c.x += (player.worldX - c.x) * 0.1; c.y += (player.worldY - c.y) * 0.1; }
+        if (dSq < (player.size + 8) * (player.size + 8)) {
             sessionGold += c.val;
             coins.splice(i, 1);
             document.getElementById('goldTxt').innerText = sessionGold;
@@ -1057,7 +1054,7 @@ function update(timestamp) {
 
     for (let i = artifacts.length - 1; i >= 0; i--) {
         const art = artifacts[i];
-        if (Math.hypot(player.worldX - art.x, player.worldY - art.y) < player.size + 20) {
+        if (distSq(player.worldX, player.worldY, art.x, art.y) < (player.size + 20) * (player.size + 20)) {
             artifacts.splice(i, 1);
             collectedArtifacts++;
             document.getElementById('artifactsTxt').innerText = `${collectedArtifacts} / 6`;
@@ -1074,7 +1071,7 @@ function update(timestamp) {
 
     for (let i = drops.length - 1; i >= 0; i--) {
         const d = drops[i];
-        if (Math.hypot(player.worldX - d.x, player.worldY - d.y) < player.size + 25) {
+        if (distSq(player.worldX, player.worldY, d.x, d.y) < (player.size + 25) * (player.size + 25)) {
             const secToFrames = (sec) => sec * 60;
             playSound('pickup');
 
@@ -1126,8 +1123,8 @@ function spawnBoss() {
     
     const spawnAngle = Math.random() * Math.PI * 2;
     activeBoss = {
-        x: player.worldX + Math.cos(spawnAngle) * 550,
-        y: player.worldY + Math.sin(spawnAngle) * 550,
+        x: player.worldX + Math.cos(spawnAngle) * 500,
+        y: player.worldY + Math.sin(spawnAngle) * 500,
         size: 36 + bossTier * 4, hp: 450 + bossTier * 450, maxHp: 450 + bossTier * 450,
         speed: 0.95 + bossTier * 0.1, imgKey: bossKeys[bossTier], angle: 0
     };
@@ -1210,8 +1207,8 @@ function render() {
 
     ctx.fillStyle = '#64748b';
     dustParticles.forEach(p => {
-        let rx = (p.x - player.worldX) % 3500 + player.worldX;
-        let ry = (p.y - player.worldY) % 3500 + player.worldY;
+        let rx = (p.x - player.worldX) % 3000 + player.worldX;
+        let ry = (p.y - player.worldY) % 3000 + player.worldY;
         ctx.globalAlpha = p.alpha; ctx.fillRect(rx, ry, p.size, p.size);
     });
     ctx.globalAlpha = 1.0;
@@ -1329,7 +1326,7 @@ function render() {
     ctx.rotate(player.angle + Math.PI / 2);
     
     if (assetStatus[player.imgKey]) ctx.drawImage(assets[player.imgKey], -player.size, -player.size, player.size * 2, player.size * 2);
-    else { ctx.fillStyle = player.color; ctx.beginPath(); ctx.moveTo(0, -player.size); ctx.lineTo(player.size * 0.7, player.size); ctx.lineTo(0, player.size * 0.5); ctx.lineTo(-player.size * 0.7, player.size); ctx.closePath(); ctx.fill(); }
+    else { ctx.fillStyle = player.color; ctx.beginPath(); ctx.moveTo(0, -player.size); ctx.lineTo(player.size * 0.7, player.size); ctx.lineTo(0, player.size * 0.5); ctx.lineTo(-player.size * 0.5, player.size); ctx.closePath(); ctx.fill(); }
     ctx.restore();
 
     ctx.restore();
@@ -1348,13 +1345,13 @@ function renderRadar() {
     enemies.forEach(e => {
         const rx = cx + (e.x - player.worldX) * scale;
         const ry = cy + (e.y - player.worldY) * scale;
-        if (Math.hypot(rx - cx, ry - cy) < 65) { radarCtx.beginPath(); radarCtx.arc(rx, ry, 1.5, 0, Math.PI * 2); radarCtx.fill(); }
+        if (distSq(rx, ry, cx, cy) < 65 * 65) { radarCtx.beginPath(); radarCtx.arc(rx, ry, 1.5, 0, Math.PI * 2); radarCtx.fill(); }
     });
 
     if (activeBoss) {
         const bx = cx + (activeBoss.x - player.worldX) * scale;
         const by = cy + (activeBoss.y - player.worldY) * scale;
-        if (Math.hypot(bx - cx, by - cy) < 65) { radarCtx.fillStyle = '#dc2626'; radarCtx.beginPath(); radarCtx.arc(bx, by, 5, 0, Math.PI * 2); radarCtx.fill(); }
+        if (distSq(bx, by, cx, cy) < 65 * 65) { radarCtx.fillStyle = '#dc2626'; radarCtx.beginPath(); radarCtx.arc(bx, by, 5, 0, Math.PI * 2); radarCtx.fill(); }
     }
 
     const isPulseFrame = (frameCount % 300) < 45;
@@ -1369,7 +1366,7 @@ function renderRadar() {
     artifacts.forEach(art => {
         const ax = cx + (art.x - player.worldX) * scale;
         const ay = cy + (art.y - player.worldY) * scale;
-        if (Math.hypot(ax - cx, ay - cy) < 65) {
+        if (distSq(ax, ay, cx, cy) < 65 * 65) {
             radarCtx.fillStyle = isPulseFrame ? '#ffffff' : '#a855f7';
             radarCtx.beginPath(); radarCtx.arc(ax, ay, isPulseFrame ? 4 : 2.5, 0, Math.PI * 2); radarCtx.fill();
         }
@@ -1379,7 +1376,7 @@ function renderRadar() {
     drops.forEach(d => {
         const dx = cx + (d.x - player.worldX) * scale;
         const dy = cy + (d.y - player.worldY) * scale;
-        if (Math.hypot(dx - cx, dy - cy) < 65) { radarCtx.beginPath(); radarCtx.arc(dx, dy, 2, 0, Math.PI * 2); radarCtx.fill(); }
+        if (distSq(dx, dy, cx, cy) < 65 * 65) { radarCtx.beginPath(); radarCtx.arc(dx, dy, 2, 0, Math.PI * 2); radarCtx.fill(); }
     });
 }
 
